@@ -3,7 +3,7 @@
 
 A little tool for commit and push your repository directly from 3dsMax using Maxscript and command line 
 
-###Usage
+### Usage
 
 "Git Commit&push.ms" is a macroscript
 
