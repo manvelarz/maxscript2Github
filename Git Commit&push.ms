@@ -58,7 +58,7 @@ rollout RepoRollout "Repository" width:290 height:328
 	(
 		group "Add all files in folder to repo" (
 			--edittext Tgfolder RepoFolderName  text:Git_repo_Path  readOnly:true labelOnTop:true--enabled:true -- align:#left
-			button BtnaddFiles "Add all" pos:[16,88] width:232 height:24 align:#left
+			button BtnaddFiles "Add all"  width:232 height:24 align:#center
 			on BtnaddFiles pressed do 
 				ShellLaunch "cmd"  ("/k cd "+thePath +"  && git add ." )
 		)	
