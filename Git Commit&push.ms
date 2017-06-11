@@ -54,6 +54,15 @@ rollout RepoRollout "Repository" width:290 height:328
 				Git_folder()
 		)	
 	)
+	rollout addFiles "Add files" width:290 height:328
+	(
+		group "Add all files in folder to repo" (
+			--edittext Tgfolder RepoFolderName  text:Git_repo_Path  readOnly:true labelOnTop:true--enabled:true -- align:#left
+			button BtnaddFiles "Add all" pos:[16,88] width:232 height:24 align:#left
+			on BtnaddFiles pressed do 
+				ShellLaunch "cmd"  ("/k cd "+thePath +"  && git add ." )
+		)	
+	)
 rollout CommitAndPushRollout "Commit local repository" width:290 height:328
 	(
 		group "Enter a message for commit" (
@@ -79,6 +88,8 @@ rollout CommitAndPushRollout "Commit local repository" width:290 height:328
 	)
 
 	addrollout RepoRollout  rof
+	addrollout addFiles rof
+	
 	addrollout CommitAndPushRollout   rof
 	for r in rof.rollouts where r.name == "RepoRollout" do( r.open=false; r.title = "Actual repo is -->  " + RepoFolderName)
 )
