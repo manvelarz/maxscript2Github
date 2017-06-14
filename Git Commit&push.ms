@@ -3,11 +3,13 @@
 	toolTip:"Add commit and push to github"
 	ButtonText:"GitPush"
 (
+
 Global IniPath = (getDir #temp + "\\Git_info.ini")
 Global Git_repo_Path = GetINISetting IniPath "LastGitFolder" "Path"
+Global Git_Remote_repo_Path = GetINISetting IniPath "LastGitFolder" "RemPath"
 Global RepoFolderName = GetINISetting IniPath "LastGitFolder" "Folder"
 try(closeRolloutFloater rof) catch()
-rof=newrolloutfloater "Git" 280 400 500 500
+Global rof=newrolloutfloater "Git" 280 400 500 500
 Global message = ""	
 
 	
@@ -28,6 +30,8 @@ fn Git_folder = (
 		if gitFolderExist then (
 			setINISetting IniPath "LastGitFolder" "Path" thePath
 			setINISetting IniPath "LastGitFolder" "Folder" RepoFolderName
+			repoConfigINIFile = thePath+"/.git/config"
+			setINISetting IniPath "LastGitFolder" "RemPath" (GetINISetting repoConfigINIFile "remote \"origin\"" "url")
 			format "actual git folder is %" thePath
 			for r in rof.rollouts where r.name == "RepoRollout" do( 
 				r.open=false
@@ -79,11 +83,22 @@ rollout CommitAndPushRollout "Commit local repository" width:290 height:328
 				ShellLaunch "cmd"  ("/k cd "+Git_repo_Path +" && git commit -a -m \""+message+"" )
 				)
 		)
+
 		button 'Gitpush' "Push to github"  width:248 height:43 align:#center
+			button 'LocalRepo' "Open Local"  align:#center
+		button 'RemoteRepo' "Open Remote"  align:#center
+		on RemoteRepo pressed do
+			(		
+				ShellLaunch Git_Remote_repo_Path ""
+			)
+		on LocalRepo pressed do
+			(		
+				ShellLaunch Git_repo_Path ""
+			)
 		on Gitpush pressed do
-		(		
-			ShellLaunch "cmd"  ("/k cd "+Git_repo_Path +"  && git push" )
-		)
+			(		
+				ShellLaunch "cmd"  ("/k cd "+Git_repo_Path +"  && git push" )
+			)		
 		on CommitAndPush open do closerollout 
 	)
 
