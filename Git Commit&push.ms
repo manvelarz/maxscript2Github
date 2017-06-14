@@ -76,13 +76,13 @@ rollout CommitAndPushRollout "Commit local repository" width:290 height:328
 			(		
 				if message == "" then message= "message generated from Maxscript"
 				
-				ShellLaunch "cmd"  ("/k cd "+thePath +" && git commit -a -m \""+message+"" )
+				ShellLaunch "cmd"  ("/k cd "+Git_repo_Path +" && git commit -a -m \""+message+"" )
 				)
 		)
 		button 'Gitpush' "Push to github"  width:248 height:43 align:#center
 		on Gitpush pressed do
 		(		
-			ShellLaunch "cmd"  ("/k cd "+thePath +"  && git push" )
+			ShellLaunch "cmd"  ("/k cd "+Git_repo_Path +"  && git push" )
 		)
 		on CommitAndPush open do closerollout 
 	)
