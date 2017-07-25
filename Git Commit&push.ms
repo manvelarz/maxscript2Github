@@ -28,12 +28,15 @@ fn Git_folder = (
 				else gitFolderExist = false
 		)
 		if gitFolderExist then (
-			Git_repo_Path = thePath
+			Git_Remote_repo_Path
 			setINISetting IniPath "LastGitFolder" "Path" thePath
 			setINISetting IniPath "LastGitFolder" "Folder" RepoFolderName
 			repoConfigINIFile = thePath+"/.git/config"
 			setINISetting IniPath "LastGitFolder" "RemPath" (GetINISetting repoConfigINIFile "remote \"origin\"" "url")
 			format "actual git folder is %" thePath
+			Git_repo_Path = thePath
+			Git_Remote_repo_Path = getINISetting IniPath "LastGitFolder" "RemPath"
+			
 			for r in rof.rollouts where r.name == "RepoRollout" do( 
 				r.open=false
 				r.title = "Repo-->  " + RepoFolderName
