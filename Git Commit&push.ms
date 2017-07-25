@@ -28,6 +28,7 @@ fn Git_folder = (
 				else gitFolderExist = false
 		)
 		if gitFolderExist then (
+			Git_repo_Path = thePath
 			setINISetting IniPath "LastGitFolder" "Path" thePath
 			setINISetting IniPath "LastGitFolder" "Folder" RepoFolderName
 			repoConfigINIFile = thePath+"/.git/config"
@@ -64,7 +65,7 @@ rollout RepoRollout "Repository" width:290 height:328
 			--edittext Tgfolder RepoFolderName  text:Git_repo_Path  readOnly:true labelOnTop:true--enabled:true -- align:#left
 			button BtnaddFiles "Add all"  width:232 height:24 align:#center
 			on BtnaddFiles pressed do 
-				ShellLaunch "cmd"  ("/k cd "+thePath +"  && git add ." )
+				ShellLaunch "cmd"  ("/k cd "+Git_repo_Path +"  && git add ." )
 		)	
 	)
 rollout CommitAndPushRollout "Commit local repository" width:290 height:328
